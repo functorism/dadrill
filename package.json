@@ -1,15 +1,10 @@
 {
-  "name": "dadrill",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./src/internal/start.ts",
-  "license": "MIT",
-  "devDependencies": {
-    "prettier": "^3.3.1",
-    "typescript": "^5.4.5"
+  "name": "dadrill-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "(cd ./packages/dadrill-dev && npm i && npm run dev)"
   },
-  "dependencies": {
-    "init": "^0.1.2",
-    "list": "^2.0.19"
-  }
+  "workspaces": [
+    "./packages/*"
+  ]
 }

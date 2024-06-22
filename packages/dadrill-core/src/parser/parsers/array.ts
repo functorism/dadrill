@@ -14,7 +14,7 @@ export const array =
                     P.Parsed.first((e) =>
                       P.Error.withContext(
                         e,
-                        P.Error.validationError(
+                        P.Error.parseErrorContext(
                           `Failed to validate element at index ${i} in array.`,
                           i
                         )

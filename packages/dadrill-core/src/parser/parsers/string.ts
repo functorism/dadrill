@@ -11,7 +11,7 @@ export const literal =
     input === s
       ? P.Parsed.Success(input as S)
       : P.Parsed.Failure(
-          P.Error.validationError(
+          P.Error.parseError(
             `Input "${input}" is not equal to expected literal "${s}".`
           )
         );

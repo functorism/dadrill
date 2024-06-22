@@ -129,9 +129,13 @@ const BaseCase = memo(
     for (const rewriter of ctx.rewriters) {
       const parsed = rewriter.rewriter.parse(value);
       if (parsed.ok) {
-        return rewriter.view({ value: parsed.value, onChange });
+        return rewriter.view({
+          value: parsed.value,
+          onChange: (a) => onChange(a as DD.JsonValue),
+        });
       }
     }
+
     return (
       <div>
         <textarea
@@ -223,21 +227,21 @@ export const useDrillOnChange = (ann: DD.Ann<DD.JsonValue, DD.JsonValue>) => {
   );
 };
 
-export type Rewriter<A extends DD.JsonValue> = {
+export type Rewriter<A> = {
   rewriter: DD.Rewrite<A>;
   view: React.FC<{ value: A; onChange: (a: A) => void }>;
 };
 
-export type Rewriters<A extends DD.JsonValue> = ReadonlyArray<Rewriter<A>>;
+export type Rewriters<A> = ReadonlyArray<Rewriter<A>>;
 
-const emptyRewriters: Rewriters<DD.JsonValue> = [];
+const emptyRewriters: Rewriters<unknown> = [];
 
 export type DataContext = {
   data: DD.JsonValue;
   drill: DD.Drill<DD.JsonValue, DD.JsonValue>;
   update: (modify: (json: DD.JsonValue) => DD.JsonValue) => void;
   setData: (json: DD.JsonValue) => void;
-  rewriters: Rewriters<DD.JsonValue>;
+  rewriters: Rewriters<unknown>;
 };
 
 export const DataContext = createContext<DataContext>(
@@ -250,7 +254,7 @@ export const useDrill = ({
   rewriters = emptyRewriters,
 }: {
   initData: DD.JsonValue;
-  rewriters?: undefined | Rewriters<DD.JsonValue>;
+  rewriters?: undefined | Rewriters<unknown>;
   onChange?: undefined | ((json: DD.JsonValue) => void);
 }): DataContext => {
   const internalRewriters = useMemo(() => {
@@ -261,7 +265,7 @@ export const useDrill = ({
     cache: DD.DrillCache;
     data: DD.JsonValue;
     drill: DD.Drill<DD.JsonValue, DD.JsonValue>;
-    rewriters: Rewriters<DD.JsonValue>;
+    rewriters: Rewriters<unknown>;
   }>(() => {
     const cache = new WeakMap();
     return {
@@ -312,7 +316,7 @@ export const useDrill = ({
 
 export const Drill = (props: {
   data: DD.JsonValue;
-  rewriters?: undefined | Rewriters<DD.JsonValue>;
+  rewriters?: undefined | Rewriters<unknown>;
   onChange?: undefined | ((json: DD.JsonValue) => void);
   renderer?: undefined | DrillRenderer;
 }) => {

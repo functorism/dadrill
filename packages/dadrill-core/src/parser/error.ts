@@ -1,53 +1,72 @@
 type VPath = string | number;
 
-type VError = { message: string; path?: VPath };
+type VError = {
+  error: { message: string; path?: VPath };
+  context?: ParseError;
+};
 
-export interface ParseError extends Array<VError> {}
+export type ParseError = Array<VError>;
 
-export const validationError = (
+export const parseError = (message: string, path: VPath = ""): ParseError => [
+  { error: { message, path } },
+];
+
+export const parseErrorContext = (
   message: string,
-  path: VPath = ""
-): ParseError => [{ message, path }];
+  path: VPath = "",
+  context: ParseError = []
+): VError => ({
+  error: { message, path },
+  context,
+});
 
-export const withContext = (err: ParseError, context: ParseError): ParseError =>
-  err.concat(context);
+export const withContext = (err: ParseError, context: VError): ParseError => [
+  {
+    error: context.error,
+    context: err,
+  },
+];
 
 export const typeMatchError = (input: unknown, expected: string) =>
-  validationError(
+  parseError(
     `Input of type "${typeof input}" is not of expected type "${expected}".`
   );
 
-export const readParseError = (verr: ParseError) => {
-  const path = verr.reduceRight(
-    (s, x) =>
-      x.path !== undefined
-        ? typeof x.path === "number"
-          ? `${s}[${x.path}]`
-          : `${s}.${x.path}`
-        : s,
-    "input"
-  );
+const flattenErrorPath = (e: VError): VPath[] => [
+  ...(e.error.path ? [e.error.path] : []),
+  ...(e.context?.flatMap(flattenErrorPath) ?? []),
+];
 
-  return {
-    error: {
-      message: verr[0]?.message,
-      path,
-    },
-    trace: verr,
-  };
-};
+const flattenErrorMessage = (e: VError): string[] => [
+  e.error.message,
+  ...(e.context?.flatMap(flattenErrorMessage) ?? []),
+];
+
+const treeSymMid = "├";
+const treeSymEnd = "└";
 
 export const showParseError = (verr: ParseError) => {
-  const { error, trace } = readParseError(verr);
-  return [
-    "",
-    "  ⚠️  " + error.message,
-    "",
-    `  🔎 At path: ${error.path}`,
-    "",
-    "  🗒️  Validation Trace:",
-    "",
-    trace.map((x) => "   📍 " + x.message).join("\n"),
-    "",
-  ].join("\n");
+  const e = verr.map((e, i) => {
+    const msg = ` [${i}] ️⛔ ${e.error.message}`;
+
+    const paths = flattenErrorPath(e);
+    const atPath = `     🔎 At path: ${paths.join(".")}`;
+
+    const traces = flattenErrorMessage(e);
+    const trace = [
+      "     🗒️ Validation Trace:",
+      "      |",
+      ...traces.map(
+        (msg, i, xs) =>
+          `      ${i === xs.length - 1 ? treeSymEnd : treeSymMid} 📍 ${msg}`
+      ),
+    ];
+
+    return [
+      msg,
+      ...(paths.length > 0 ? [atPath] : []),
+      ...(traces.length > 1 ? [trace.join("\n")] : []),
+    ].join("\n\n");
+  });
+  return e.join("\n\n");
 };

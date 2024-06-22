@@ -6,3 +6,4 @@ export * from "./proxy";
 export * from "./record";
 export * from "./string";
 export * from "./object";
+export * from "./union";

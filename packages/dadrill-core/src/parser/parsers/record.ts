@@ -21,12 +21,12 @@ export const record =
           )
           .pipe(
             P.Parsed.ap(
-              record[k](input[k as unknown as keyof typeof input]).pipe(
+              record[k](input?.[k as unknown as keyof typeof input]).pipe(
                 P.Parsed.bimap(
                   (e) =>
                     P.Error.withContext(
                       e,
-                      P.Error.validationError(
+                      P.Error.parseErrorContext(
                         `Failed to validate property "${String(k)}" in object.`,
                         k as string
                       )

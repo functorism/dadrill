@@ -283,13 +283,13 @@ const rewrite = <A>(
 
 export type Parsed<A> = { ok: false } | { ok: true; value: A };
 
-export type Rewrite<A extends JsonValue> = {
+export type Rewrite<A> = {
   parse: (json: JsonValue) => Parsed<A>;
   fromJson: (a: A) => (json: JsonValue) => A;
   toJson: (a: A) => JsonValue;
 };
 
-export const Rewrite = <A extends JsonValue>(args: {
+export const Rewrite = <A>(args: {
   parse: (json: JsonValue) => Parsed<A>;
   fromJson: (a: A) => (json: JsonValue) => A;
   toJson: (a: A) => JsonValue;
@@ -315,7 +315,7 @@ export const drillFromJson = ({
   rewriters?: Rewrite<any>[];
   cache?: DrillCache;
 }): Drill<JsonValue, JsonValue> => {
-  if (isJsonObject(json)) {
+  if (isJsonObject(json) || isJsonArray(json)) {
     if (cache.has(json)) {
       return cache.get(json)!;
     }
@@ -324,8 +324,8 @@ export const drillFromJson = ({
       const parsed = rewriter.parse(json);
       if (parsed.ok) {
         const rewritten = rewrite(
-          rewriter.toJson,
           rewriter.fromJson(parsed.value),
+          rewriter.toJson,
           json,
           lens,
           path
@@ -334,7 +334,9 @@ export const drillFromJson = ({
         return rewritten;
       }
     }
+  }
 
+  if (isJsonObject(json)) {
     const keyed = Keyed(
       Object.entries(json).reduce(
         (acc, [k, v]) => ({
@@ -356,9 +358,6 @@ export const drillFromJson = ({
     cache.set(json, keyed);
     return keyed;
   } else if (isJsonArray(json)) {
-    if (cache.has(json)) {
-      return cache.get(json)!;
-    }
     const indexed = Indexed(
       json.map((v, i) =>
         drillFromJson({
@@ -388,13 +387,15 @@ const keyedToRaw = <A, B>(
     Object.entries(s).map(([k, v]) => [k, structureToRaw(v, unwrap)])
   );
 
-const indexedToRaw = <A, B>(s: IndexedStructure<A>, unwrap: (a: A) => B): A[] =>
-  s.map((v) => structureToRaw(v, unwrap));
+const indexedToRaw = <A, B>(
+  s: IndexedStructure<A>,
+  unwrap: (a: A) => B
+): unknown[] => s.map((v) => structureToRaw(v, unwrap));
 
-const structureToRaw = <A, B>(s: Structured<A>, unwrap: (a: A) => B): any =>
+const structureToRaw = <A, B>(s: Structured<A>, unwrap: (a: A) => B): unknown =>
   pipe(
     s,
-    matchStructured<A, any>({
+    matchStructured<A, unknown>({
       Keyed: (value) => keyedToRaw(value, unwrap),
       Indexed: (value) => indexedToRaw(value, unwrap),
       Value: (value) => unwrap(value),

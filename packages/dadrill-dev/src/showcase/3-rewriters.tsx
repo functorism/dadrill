@@ -3,29 +3,19 @@ import { Driller, Rewriter, Rewriters, useDrill } from "dadrill-react";
 import { useState } from "react";
 import { exampleData } from "../support/example-data";
 import {
-  Message,
+  InternalMessage,
   MessageView,
-  messageFromJson,
-  parseMessage,
+  messageRewriter,
 } from "../support/message";
 
-const msgRewriter = DD.Rewrite<Message>({
-  parse: parseMessage,
-  fromJson: messageFromJson,
-  toJson: (a) => ({
-    type: a.type,
-    content: a.content,
-  }),
-});
-
-const messageRewriter: Rewriter<Message> = {
-  rewriter: msgRewriter,
+const rewriter: Rewriter<InternalMessage> = {
+  rewriter: messageRewriter,
   view: ({ value, onChange }) => (
     <MessageView message={value} onChange={onChange} />
   ),
 };
 
-const rewriters: Rewriters<any> = [messageRewriter];
+const rewriters: Rewriters<any> = [rewriter];
 
 export const DashboardRewriters = () => {
   const [data, setData] = useState<DD.JsonValue>({

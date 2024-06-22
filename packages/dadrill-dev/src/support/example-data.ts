@@ -4,7 +4,7 @@ export const exampleData = {
   description: "A dashboard for development",
   messages: [
     { type: "ai", content: "Hello, how are you?" },
-    { type: "user", content: "I'm fine, thanks!" },
+    { role: "user", content: "I'm fine, thanks!" },
   ],
   sections: [
     {

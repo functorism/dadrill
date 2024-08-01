@@ -2,9 +2,19 @@
   "name": "dadrill-workspace",
   "private": true,
   "scripts": {
-    "dev": "(cd ./packages/dadrill-dev && npm i && npm run dev)"
+    "dev": "(cd ./packages/dadrill-dev && npm i && npm run dev)",
+    "build": "nx run-many --target=build --all"
   },
   "workspaces": [
     "./packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "@nx/js": "^19.5.4",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "nx": "19.5.4",
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {}
 }

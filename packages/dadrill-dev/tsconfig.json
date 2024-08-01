@@ -4,6 +4,6 @@
   "compilerOptions": {
     "tsBuildInfoFile": ".tsbuildinfo",
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "outDir": "./dist"
   }
 }

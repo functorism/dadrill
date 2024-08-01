@@ -1,10 +1,16 @@
 {
   "name": "dadrill-dev",
   "version": "1.0.0",
-  "main": "dashboard.tsx",
   "license": "MIT",
+  "repository": "https://github.com/functorism/dadrill",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "./dist/src/dashboard.js",
+  "types": "./dist/src/dashboard.d.ts",
   "scripts": {
-    "dev": "vite ."
+    "dev": "vite .",
+    "build": "tsc -p ."
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

@@ -1,9 +1,16 @@
 {
   "name": "dadrill-react",
   "version": "1.0.0",
-  "main": "./src/dadrill-react.tsx",
-  "types": "./src/dadrill-react.tsx",
   "license": "MIT",
+  "repository": "https://github.com/functorism/dadrill",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "./dist/src/dadrill-react.js",
+  "types": "./dist/src/dadrill-react.d.ts",
+  "scripts": {
+    "build": "tsc -p ."
+  },
   "dependencies": {
     "dadrill-core": "*"
   },

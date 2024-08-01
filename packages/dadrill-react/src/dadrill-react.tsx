@@ -72,13 +72,17 @@ export const DefaultWrapObject = memo(
   }
 );
 
+export type WrapArrayProps = {
+  items: Array<{ child: React.ReactNode; label: string }>;
+};
+
+export type WrapObjectProps = {
+  items: Array<{ child: React.ReactNode; label: string }>;
+};
+
 export type DrillRenderer = {
-  WrapArray: React.FC<{
-    items: Array<{ child: React.ReactNode; label: string }>;
-  }>;
-  WrapObject: React.FC<{
-    items: Array<{ child: React.ReactNode; label: string }>;
-  }>;
+  WrapArray: React.FC<WrapArrayProps>;
+  WrapObject: React.FC<WrapObjectProps>;
   WrapValue: React.FC<ValueProps>;
 };
 

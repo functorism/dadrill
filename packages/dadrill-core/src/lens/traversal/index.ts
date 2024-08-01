@@ -11,7 +11,7 @@ const Extra = { Array: ExtraArray, Equality: ExtraEquality };
 
 export { Extra };
 
-export interface Traversal<S, A> extends Fold.Fold<S, A>, Setter.Setter<S, A> {}
+export type Traversal<S, A> = Fold.Fold<S, A> & Setter.Setter<S, A>;
 
 export const traversal = <S, A>(
   fold: Fold.Fold<S, A>,

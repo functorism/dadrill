@@ -3,9 +3,9 @@ import * as Fold from "../fold";
 
 export type View<S, A> = (s: S) => A;
 
-export interface Getter<S, A> extends Fold.Fold<S, A> {
+export type Getter<S, A> = Fold.Fold<S, A> & {
   view: View<S, A>;
-}
+};
 
 export const getter = <S, A>(view: View<S, A>): Getter<S, A> => ({
   view,

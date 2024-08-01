@@ -4,9 +4,7 @@ import * as Getter from "../getter";
 import * as Setter from "../setter";
 import * as Lens from "../lens";
 
-export interface Prism<S, A>
-  extends Traversal.Traversal<S, A>,
-    Review.Review<S, A> {}
+export type Prism<S, A> = Traversal.Traversal<S, A> & Review.Review<S, A>;
 
 export const prism = <S, A>(
   t: Traversal.Traversal<S, A>,

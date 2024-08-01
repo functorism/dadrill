@@ -6,7 +6,7 @@ import * as Prism from "../prism";
 import * as Review from "../review";
 import * as Setter from "../setter";
 
-export interface Iso<S, A> extends Lens.Lens<S, A>, Prism.Prism<S, A> {}
+export type Iso<S, A> = Lens.Lens<S, A> & Prism.Prism<S, A>;
 
 export const iso = <S, A>(
   view: (s: S) => A,

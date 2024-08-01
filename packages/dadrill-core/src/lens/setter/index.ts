@@ -4,10 +4,10 @@ export type Modify<S, A> = (g: (a: A) => A) => (s: S) => S;
 
 export type Set<S, A> = (a: A) => (s: S) => S;
 
-export interface Setter<S, A> {
+export type Setter<S, A> = {
   modify: Modify<S, A>;
   set: Set<S, A>;
-}
+};
 
 export const setter = <S, A>(
   modify: Modify<S, A>,

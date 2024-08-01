@@ -4,7 +4,7 @@ import * as Setter from "../setter";
 export * from "./compose";
 export * from "./extra/object";
 
-export interface Lens<S, A> extends Setter.Setter<S, A>, Getter.Getter<S, A> {}
+export type Lens<S, A> = Setter.Setter<S, A> & Getter.Getter<S, A>;
 
 export const lens = <S, A>(
   getter: Getter.Getter<S, A>,

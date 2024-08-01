@@ -7,9 +7,9 @@ export * from "./lift";
 
 export type Foldr<S, A> = <B>(g: (a: A, b: B) => B, b: B, s: S) => B;
 
-export interface Fold<S, A> {
+export type Fold<S, A> = {
   foldr: Foldr<S, A>;
-}
+};
 
 export const fold = <S, A>(foldr: Foldr<S, A>): Fold<S, A> => ({
   foldr,

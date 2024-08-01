@@ -1,18 +1,15 @@
 {
   "name": "dadrill-react",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "license": "MIT",
   "repository": "https://github.com/functorism/dadrill",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "main": "./dist/src/dadrill-react.js",
   "types": "./dist/src/dadrill-react.d.ts",
   "scripts": {
     "build": "tsc -p ."
   },
   "dependencies": {
-    "dadrill-core": "*"
+    "dadrill-core": "0.0.6"
   },
   "peerDependencies": {
     "react": "^18.3.1",

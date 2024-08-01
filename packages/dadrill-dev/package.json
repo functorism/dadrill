@@ -1,11 +1,8 @@
 {
   "name": "dadrill-dev",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "license": "MIT",
   "repository": "https://github.com/functorism/dadrill",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "main": "./dist/src/dashboard.js",
   "types": "./dist/src/dashboard.d.ts",
   "scripts": {
@@ -15,9 +12,9 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "dadrill-core": "*",
-    "dadrill-react": "*",
-    "dadrill-react-ant": "*",
+    "dadrill-core": "0.0.6",
+    "dadrill-react": "0.0.6",
+    "dadrill-react-ant": "0.0.6",
     "prettier": "^3.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

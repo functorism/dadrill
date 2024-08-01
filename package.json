@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "(cd ./packages/dadrill-dev && npm i && npm run dev)",
-    "build": "nx run-many --target=build --all"
+    "build": "nx run-many --target=build --all --parallel=false"
   },
   "workspaces": [
     "./packages/*"

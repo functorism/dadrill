@@ -10,7 +10,7 @@
     "moduleDetection": "auto" /* Control what method is used to detect module-format JS files. */,
 
     /* Modules */
-    "module": "NodeNext" /* Specify what module code is generated. */,
+    "module": "Preserve" /* Specify what module code is generated. */,
 
     /* Emit */
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,

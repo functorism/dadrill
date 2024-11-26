@@ -1,6 +1,6 @@
 {
   "name": "dadrill-react-ant",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "license": "MIT",
   "repository": "https://github.com/functorism/dadrill",
   "main": "./dist/src/dadrill-react-ant.js",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "antd": "^5.18.0",
-    "dadrill-core": "0.0.8",
-    "dadrill-react": "0.0.8"
+    "dadrill-core": "0.0.9",
+    "dadrill-react": "0.0.9"
   },
   "peerDependencies": {
     "react": "^18.3.1",
